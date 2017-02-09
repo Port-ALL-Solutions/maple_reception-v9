@@ -1,0 +1,377 @@
+<openerp>
+  <data>
+    <!-- explicit list view definition -->
+
+
+    <record model="ir.ui.view" id="mapleorder.view_list_test">
+      <field name="name">Reception Orders</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="priority">1</field>
+      <field name="arch" type="xml">
+        <tree create="false" delete="false">
+          <field name="driver"/>
+          <field name="receivedBy" />
+          <field name="barrelQty" sum="1"/>
+          <field name="barrelReceived" readonly="1" sum="1"/>
+          <button string="Calc" type="object" name="eval_barrel_received"/>
+          <field name="receivedAt" />
+          <field name="closed"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="mapleorder.view_recept_list">
+      <field name="name">Barrel Listing</field>
+      <field name="model">mapleorder.order</field>
+      <field name="arch" type="xml">
+        <tree create="false" edit="false">
+          <field name="productor" />
+          <field name="buyer" />
+          <field name="pick_driver" />
+          <field name="receivedAt" />
+          <field name="address" />
+          <field name="city" />
+          <field name="region" />
+          <field name="barrellist" />
+        </tree>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="mapleorder.view_barrel_view">
+      <field name="name">Barrel</field>
+      <field name="model">mapleorder.barrel</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="id" invisible="1"/>
+                <field name="processStatus" />
+                <field name="tempnumber"/>
+                <field name="nameproducer" />
+                <field name="site" />
+                <field name="warehouse"/>
+                <field name="row"/>
+                <field name="containerState"/>
+                
+                <field name="dateReceived" />
+                <field name="type" />
+              </group>
+              <group>
+                <img class="img img-responsive" style="width:200px;height:135px;float:right" src="/mapleorder/static/src/img/header.jpg"/>
+              </group>
+            </group>
+	 	 			  <notebook>
+							<page string="Weighted">
+										<group>
+                      <field name="grossweight" />
+                      <field name="tare" />
+                      <field name="propriete" />
+                    </group>
+                    <group>
+                      <field name="valve" />
+                      <field name="type" />
+                      <field name="genre" />
+                    </group>
+							</page>
+              <page string="Rated" >
+                <group>
+                  <field name="seal"/>
+                  <field name="default" />
+                  <field name="grade" />
+                  <field name="brix" />
+                  <field name="shipped" />
+                </group>
+                <group>
+                  <field name="lumiere" />
+                  <field name="ratedBy"  />
+                  <field name="ratedAt" />
+                  <field name="barrelNumber"/>
+                </group>
+              </page>
+              <page string="Transformation" >
+                <group>
+                  <field name="inspector" />
+                  <field name="inspectOn" />
+                </group>
+                <group>
+                  <field name="tote" />
+                  <field name="full" />
+                </group>
+              </page>
+						</notebook>
+
+            <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="message_ids" widget="mail_thread"/>
+            </div>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="mapleorder.view_barrel_list_weight">
+      <field name="name">Barrel List</field>
+      <field name="model">mapleorder.barrel</field>
+      <field name="arch" type="xml">
+        <tree create="false" editable="1" delete="false">
+          <field name="tempnumber" readonly="1"/>
+          <field name="nameproducer" readonly="1"/>
+          <field name="barrelNumber" />
+          <field name="grossweight" sum="1"/>
+          <field name="tare" />
+          <field name="genre"/>
+          <field name="barrelState" />
+          <field name="propriete" />
+          <field name="valve" />
+          <field name="site" />
+          <field name="type" readonly="1"/>
+          <field name="processStatus" invisible="1"/>
+
+          <field name="warehouse" readonly="1"/>
+          <field name="row" readonly="1"/>
+        </tree>
+      </field>
+    </record>
+
+
+   <record model="ir.ui.view" id="mapleorder.view_recept_order">
+      <field name="name">Barrel Listing</field>
+      <field name="model">mapleorder.order</field>
+      <field name="priority">2</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="pickid" readonly="1"/>
+                <field name="productor" readonly="1"/>
+                <field name="buyer" readonly="1"/>
+                <field name="address" readonly="1"/>
+                <field name="city" readonly="1"/>
+                <field name="phone" readonly="1"/>
+                <field name="warehouse" readonly="1"/>
+                <field name="row" readonly="1"/>
+
+              </group>
+              <group>
+                <img class="img img-responsive" style="width:200px;height:135px;float:right" src="/mapleorder/static/src/img/header.jpg"/>
+              </group>
+            </group>
+            <field name="barrellist" widget="one2many" domain="[('tote','!=',True)]">
+              <tree create="1" editable="bottom">
+                <field name="tempnumber"/>
+                <field name="containerState"/>
+                <field name="warehouse"/>
+                <field name="row"/>
+              </tree>
+            </field>
+            <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="message_ids" widget="mail_thread"/>
+            </div>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="mapleorder.view_list2">
+      <field name="name">Reception Order</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="receivedBy"/>
+                <field name="barrelReceived" readonly="1"/>
+                <button string="Calc" type="object" name="eval_barrel_received"/>
+                <newline/>
+                <field name="schedule" readonly="1"/>
+                <field name="receivedAt"/>
+<!--                <field name="warehouse" />
+                <field name="row" />  -->
+                <field name="closed" />
+              </group>
+              <group>
+                <img class="img img-responsive" style="width:200px;height:#35px;float:right" src="/mapleorder/static/src/img/header.jpg"/>
+              </group>
+            </group>
+            <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="message_ids" widget="mail_thread"/>
+            </div>
+          </sheet>
+        </form>
+      </field>
+    </record>
+<!-- 
+    <record model="ir.ui.view" id="mapleorder.view_pickcalendar1">
+      <field name="name">Reception Calendar</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="arch" type="xml">
+        <calendar color="warehouse" date_start="receivedAt" string="Reception Calendar" display="Reception : [barrelReceived] barrels, in [warehouse]/[row]" mode="month">
+          <field name="receivedAt"/>
+          <field name="barrelReceived"/>
+          <field name="warehouse"/>
+          <field name="row" />
+        </calendar>
+      </field>
+    </record>
+-->
+    
+    <record model="ir.ui.view" id="mapleorder.viewbarrel_warehouse">
+      <field name="name">Barrel in warehouse</field>
+      <field name="model">mapleorder.barrel</field>
+      <field name="arch" type="xml">
+        <tree create="false" editable="false" edit="false">
+                <field name="seal"/>
+                <field name="buyer" />
+                <field name="nameproducer"  />
+                <field name="tempnumber"/>
+                <field name="containerState"/>
+                <field name="warehouse"/>
+                <field name="row"/>
+                <field name="processStatus" />
+                <field name="dateReceived"/>
+                <field name="tote" />
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="mapleorder.report_maplereception">
+      <field name="name">Reception Order Report</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="arch" type="xml">
+        <pivot string="Reception Orders" display_quantity="true">
+          <field name="driver" type="row"/>
+          <field name="write_date" type="col"/>
+        </pivot>
+      </field>
+    </record>
+
+
+
+    <record id="mapleorder.action_reception_base" model="ir.actions.act_window">
+        <field name="name">Reception Orders</field>
+        <field name="res_model">mapleorder.maplepick</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+          <record model="ir.actions.act_window.view" id="mapleorder.action_reception_tree">
+              <field name="sequence" eval="1"/>
+              <field name="view_mode">tree</field>
+              <field name="act_window_id" ref="mapleorder.action_reception_base"/>
+              <field name="view_id" ref="mapleorder.view_list_test"/>
+          </record>
+
+          <record model="ir.actions.act_window.view" id="mapleorder.action_reception_form">
+              <field name="sequence" eval="1"/>
+              <field name="view_mode">form</field>
+              <field name="act_window_id" ref="mapleorder.action_reception_base"/>
+              <field name="view_id" ref="mapleorder.view_list2"/>
+          </record>
+
+    
+    <record id="mapleorder.action_reception_order" model="ir.actions.act_window">
+      <field name="name">Barrel Registering</field>
+      <field name="res_model">mapleorder.order</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="mapleorder.action_reception_order1">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">tree</field>
+      <field name="act_window_id" ref="mapleorder.action_reception_order"/>
+      <field name="view_id" ref="mapleorder.view_recept_list"/>
+      <field name="domain">[('tote','!=',True)]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="mapleorder.action_reception_order_form2">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="act_window_id" ref="mapleorder.action_reception_order"/>
+      <field name="view_id" ref="mapleorder.view_recept_order"/>
+    </record>
+
+    
+<!--
+    <record model="ir.actions.act_window" id="mapleorder.action_calendar1">
+      <field name="name">Reception Calendar</field>
+      <field name="res_model">mapleorder.maplepick</field>
+      <field name="view_mode">calendar</field>
+      <field name="view_id" ref="mapleorder.view_pickcalendar1"/>
+    </record>
+-->
+
+    <record model="ir.actions.act_window" id="mapleorder.action_barrellist1">
+      <field name="name">Barrel Weight List</field>
+      <field name="res_model">mapleorder.barrel</field>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="mapleorder.view_barrel_list_weight"/>
+      <field name="domain">[('tote','!=',True)]</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="mapleorder.action_barrellist2">
+      <field name="name">Inventory By Warehouse</field>
+      <field name="res_model">mapleorder.barrel</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'group_by':['warehouse', 'row']}</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="mapleorder.action_barrel_weight11">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">tree</field>
+      <field name="act_window_id" ref="mapleorder.action_barrellist2"/>
+      <field name="view_id" ref="mapleorder.viewbarrel_warehouse"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="mapleorder.action_barrel_weight12">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="act_window_id" ref="mapleorder.action_barrellist2"/>
+      <field name="view_id" ref=""/>
+    </record>
+    
+    <record model="ir.actions.act_window" id="mapleorder.action_barrellist_prod">
+      <field name="name">Inventory By Producer</field>
+      <field name="res_model">mapleorder.barrel</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'group_by': 'nameproducer'}</field>
+      <field name="view_id" ref="mapleorder.viewbarrel_warehouse"/>
+    </record>
+
+    
+    <record model="ir.actions.act_window" id="mapleorder.reception_report">
+      <field name="name">Reception Report</field>
+      <field name="res_model">mapleorder.barrel</field>
+      <field name="view_mode">pivot</field>
+    </record>
+
+    
+    <!-- Top menu item -->
+
+    <menuitem name="Maple Syrup Reception" id="mapleorder.menu_root" sequence="13" />
+
+    <!-- menu categories -->
+
+    <menuitem name="Reception Orders" id="mapleorder.menu_1" parent="mapleorder.menu_root"
+                action="mapleorder.action_reception_base"/>
+    <menuitem name="Barrel Registering" id="mapleorder.menu_15" parent="mapleorder.menu_root"
+              action="mapleorder.action_reception_order" />
+<!--
+    <menuitem name="Reception Calendar" id="mapleorder.menu_2" parent="mapleorder.menu_root"
+                action="mapleorder.action_calendar1"/>
+-->
+    <menuitem name="Barrel Weight List" id="mapleorder.menu_25" parent="mapleorder.menu_root"
+              action="mapleorder.action_barrellist1" />
+
+    <menuitem name="Inventory" id="mapleorder.menu_26" parent="mapleorder.menu_root"/>
+    <menuitem name="By Warehouse" id="mapleorder.menu_261" parent="mapleorder.menu_26"
+              action="mapleorder.action_barrellist2" />
+    <menuitem name="By Producer" id="mapleorder.menu_262" parent="mapleorder.menu_26"
+              action="mapleorder.action_barrellist_prod" />
+
+    <menuitem name="Reception Report" id="mapleorder.menu_27" parent="mapleorder.menu_root"
+              action="mapleorder.reception_report" />
+    
+
+  </data>
+</openerp>

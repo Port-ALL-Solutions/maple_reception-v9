@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <report
+        id="report_barrels"
+        model="mapleorder.barrel"
+        string="Weight Barrel Report"
+        name="maplerating.report_barrel_view"
+        file="maplerating.report_barrel"
+        report_type="qweb-pdf" />
+
+    <template id="report_barrel_view">
+        <t t-call="report.html_container">
+          <t t-call="report.external_layout">
+            <div class="page">
+              <table>
+                <tr>
+                  <th>No temp</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Producteur</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Adresse</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Ville</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Acheteur</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Entrepôt</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Rangée</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Date reçue</th>
+                  <th>&amp;nbsp;</th>
+                  <th>État</th>
+                  <th>&amp;nbsp;</th>
+                  <th>No baril</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Plein</th>
+                  <th>&amp;nbsp;</th>
+                  <th>Proprio</th>
+                </tr>
+                <t t-foreach="docs" t-as="doc">
+                  <tr>
+                    <td>
+                      <span t-field="doc.tempnumber"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.nameproducer"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.producerAddr"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.producerCity"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.buyer"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.warehouse"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.row"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.dateReceived"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.containerState"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.barrelNumber"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.full"/>
+                    </td>
+                    <td>&amp;nbsp;</td>
+                    <td>
+                      <span t-field="doc.propriete"/>
+                    </td>
+                  </tr>
+                </t>
+              </table>
+            </div>
+          </t>
+        </t>
+    </template>
+  
+</data>
+</openerp>
